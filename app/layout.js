@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "E-Commerce Dashboard",
-  description: "for safety",
+  description: "for safety and purpose",
   icons:{
     icon: "/butt.png"
   }
