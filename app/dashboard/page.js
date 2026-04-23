@@ -3,6 +3,7 @@
 import React, { useEffect } from "react";
 import SideBar from "../components/SideBar";
 import Hero from "../components/Hero";
+import Navbar from "../components/Navbar";
 
 const Dashboard = () => {
 
@@ -28,13 +29,19 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="sm:flex sm:min-h-screen bg-gray-50">
+    <div className="sm:flex sm:h-screen bg-gray-100">
       {/* Sidebar */}
       <SideBar />
 
       {/* Main Content */}
-      <main className="flex-1 min-h-screen md:ml-0">
-        <Hero />
+      <main className="flex-1 flex flex-col overflow-hidden">
+        {/* Navbar */}
+        <Navbar />
+        
+        {/* Hero Content */}
+        <div className="flex-1 overflow-y-auto">
+          <Hero />
+        </div>
       </main>
     </div>
   );

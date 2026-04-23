@@ -4,9 +4,8 @@ import Login from "./components/Login";
 
 export default function Home() {
   return (
-    <>
-    <Navbar />
-    <Login />
-    </>
+    <main className="min-h-screen bg-white">
+      <Login />
+    </main>
   );
 }
