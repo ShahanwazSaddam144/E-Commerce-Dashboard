@@ -191,12 +191,12 @@ const Hero = () => {
   };
 
   const showToast = (type, message) => {
-  setToast({ show: true, type, message });
+    setToast({ show: true, type, message });
 
-  setTimeout(() => {
-    setToast({ show: false, type: "", message: "" });
-  }, 3000);
-};
+    setTimeout(() => {
+      setToast({ show: false, type: "", message: "" });
+    }, 3000);
+  };
 
   return (
     <>
@@ -476,12 +476,12 @@ const Hero = () => {
         </div>
       )}
       {productsPopup && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <form
             onSubmit={handleAddProduct}
-            className="bg-white w-full max-w-md rounded-2xl p-6 shadow-xl space-y-4 animate-in zoom-in"
+            className="bg-white w-full max-w-md rounded-2xl p-6 shadow-2xl space-y-4 animate-in fade-in zoom-in duration-300"
           >
-            <h2 className="text-xl font-bold text-gray-800 text-center">
+            <h2 className="text-2xl font-bold text-gray-900 text-center mb-2">
               Add Product
             </h2>
 
@@ -490,7 +490,7 @@ const Hero = () => {
               name="productName"
               placeholder="Product Name"
               onChange={handleChange}
-              className="w-full border p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-200 p-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
             />
 
             <input
@@ -498,7 +498,7 @@ const Hero = () => {
               name="productPrice"
               placeholder="Price"
               onChange={handleChange}
-              className="w-full border p-2 rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-200 p-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
             />
 
             <input
@@ -506,59 +506,64 @@ const Hero = () => {
               name="productRating"
               placeholder="Rating"
               onChange={handleChange}
-              className="w-full border p-2 rounded-lg focus:ring-2 focus:ring-blue-500"
-            />
-
-            <input
-              type="number"
-              name="productReviews"
-              placeholder="Reviews"
-              onChange={handleChange}
-              className="w-full border p-2 rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-200 p-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
             />
 
             <input
               type="text"
-              name="productCategory"
-              placeholder="Category"
+              name="productReviews"
+              placeholder="Reviews"
               onChange={handleChange}
-              className="w-full border p-2 rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-200 p-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
             />
+
+            <select
+              name="productCategory"
+              onChange={handleChange}
+              className="w-full border border-gray-200 p-2.5 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+            >
+              <option value="">Select Category</option>
+              <option value="Watches">Watches</option>
+              <option value="Shoes">Shoes</option>
+              <option value="Clothing">Clothing</option>
+              <option value="Electronics">Electronics</option>
+              <option value="Accessories">Accessories</option>
+              <option value="Bags">Bags</option>
+            </select>
 
             <textarea
               name="productDesc"
               placeholder="Description"
               onChange={handleChange}
-              className="w-full border p-2 rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-200 p-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 resize-none"
             />
 
             <input
               type="file"
               name="productImage"
               onChange={handleChange}
-              className="w-full"
+              className="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100 transition"
             />
 
-            <div className="flex gap-3">
+            <div className="flex gap-3 pt-2">
               <button
                 type="button"
                 onClick={() => setProductsPopup(false)}
-                className="flex-1 bg-gray-300 py-2 rounded-lg"
+                className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-2.5 rounded-lg font-medium transition-all duration-200 transform hover:scale-105"
               >
                 Cancel
               </button>
 
               <button
                 type="submit"
-                className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
+                className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-2.5 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg"
               >
-                Add
+                Add Product
               </button>
             </div>
           </form>
         </div>
       )}
-
       {toast.show && (
         <div
           className={`fixed bottom-5 right-5 z-50 px-5 py-3 rounded-xl shadow-lg text-white flex items-center gap-2
