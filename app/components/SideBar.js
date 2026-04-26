@@ -8,6 +8,7 @@ const SideBar = () => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [open, setOpen] = useState(false);
   const [activeItem, setActiveItem] = useState("dashboard");
+  const [openDropdown, setOpenDropdown] = useState(null);
 
   const menuItems = [
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -62,27 +63,60 @@ const SideBar = () => {
             {menuItems.map((item) => {
               const Icon = item.icon;
               const isActive = activeItem === item.id;
+              const isDropdownOpen = openDropdown === item.id;
+
               return (
                 <li key={item.id}>
-                  <Link href={`/${item.id}`}>
-                    <button
-                      onClick={() => {
-                        setActiveItem(item.id);
-                        setOpen(false);
-                      }}
-                      className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 group ${
-                        isActive
-                          ? "bg-blue-600 text-white shadow-lg"
-                          : "text-gray-300 hover:bg-gray-700 hover:text-white"
-                      }`}
-                    >
-                      <Icon size={20} className="flex-shrink-0" />
-                      <span className="font-medium text-sm">{item.label}</span>
-                      {isActive && (
-                        <ChevronDown size={16} className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
-                      )}
-                    </button>
-                  </Link>
+                  <button
+                    onClick={() => {
+                      setActiveItem(item.id);
+                      setOpen(false);
+                      if (item.id === "products" || item.id === "orders") {
+                        setOpenDropdown(isDropdownOpen ? null : item.id);
+                      }
+                    }}
+                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 group ${
+                      isActive
+                        ? "bg-blue-600 text-white shadow-lg"
+                        : "text-gray-300 hover:bg-gray-700 hover:text-white"
+                    }`}
+                  >
+                    <Icon size={20} className="flex-shrink-0" />
+                    <span className="font-medium text-sm">{item.label}</span>
+                    {(item.id === "products" || item.id === "orders") && (
+                      <ChevronDown size={16} className={`ml-auto transition-transform ${isDropdownOpen ? "rotate-180" : ""}`} />
+                    )}
+                  </button>
+
+                  {item.id === "products" && isDropdownOpen && (
+                    <ul className="ml-8 mt-1 space-y-1 text-sm text-gray-400">
+                      <li>
+                        <Link href="/products/add">
+                          <span className="block px-3 py-2 rounded-lg hover:bg-gray-700 cursor-pointer">Add Product</span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/products/list">
+                          <span className="block px-3 py-2 rounded-lg hover:bg-gray-700 cursor-pointer">All Products</span>
+                        </Link>
+                      </li>
+                    </ul>
+                  )}
+
+                  {item.id === "orders" && isDropdownOpen && (
+                    <ul className="ml-8 mt-1 space-y-1 text-sm text-gray-400">
+                      <li>
+                        <Link href="/orders">
+                          <span className="block px-3 py-2 rounded-lg hover:bg-gray-700 cursor-pointer">All Orders</span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/orderstatus">
+                          <span className="block px-3 py-2 rounded-lg hover:bg-gray-700 cursor-pointer">Order Status</span>
+                        </Link>
+                      </li>
+                    </ul>
+                  )}
                 </li>
               );
             })}
