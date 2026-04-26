@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const Login = require("./controllers/login");
 const Products = require("./controllers/products");
+const OrderStatus = require("./controllers/orderstatus");
 const app = express();
 
 
@@ -32,6 +33,7 @@ const limiter = rateLimit({
 //Routes
 app.use('/api', Login, limiter);
 app.use('/api', Products, limiter);
+app.use('/api', OrderStatus, limiter);
 
 //Mongoose Connect
 mongoose.connect(process.env.MONGODB, {})
