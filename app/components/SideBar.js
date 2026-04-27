@@ -19,6 +19,15 @@ const SideBar = () => {
     { id: "settings", label: "Settings", icon: Settings }
   ];
 
+  const hrefs = {
+    dashboard: "/dashboard",
+    products: "/products",
+    orders: "/orders",
+    customers: "/customers",
+    analytics: "/analytics",
+    settings: "/settings"
+  };
+
   const handleLogout = async () => {
     try {
       await fetch("http://localhost:5000/api/logout", {
@@ -45,7 +54,7 @@ const SideBar = () => {
         </button>
       </div>
 
-      <aside className={`fixed md:static top-16 md:top-0 left-0 z-40 h-[calc(100vh-4rem)] md:h-screen w-64 bg-gradient-to-b from-gray-900 to-gray-800 text-white transform ${open ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 transition-transform duration-300 flex flex-col shadow-xl overflow-y-auto`}>
+      <aside className={`fixed md:static top-16 md:top-0 left-0 z-40 min-h-[calc(100vh-4rem)] md:min-h-screen w-64 bg-gradient-to-b from-gray-900 to-gray-800 text-white transform ${open ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 transition-transform duration-300 flex flex-col shadow-xl overflow-y-auto`}>
         
         <div className="p-6 border-b border-gray-700 hidden md:flex items-center gap-3">
           <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center font-bold text-lg shadow-lg">
@@ -67,26 +76,42 @@ const SideBar = () => {
 
               return (
                 <li key={item.id}>
-                  <button
-                    onClick={() => {
-                      setActiveItem(item.id);
-                      setOpen(false);
-                      if (item.id === "products" || item.id === "orders") {
-                        setOpenDropdown(isDropdownOpen ? null : item.id);
-                      }
-                    }}
-                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 group ${
-                      isActive
-                        ? "bg-blue-600 text-white shadow-lg"
-                        : "text-gray-300 hover:bg-gray-700 hover:text-white"
-                    }`}
-                  >
-                    <Icon size={20} className="flex-shrink-0" />
-                    <span className="font-medium text-sm">{item.label}</span>
-                    {(item.id === "products" || item.id === "orders") && (
+                  {item.id === "products" || item.id === "orders" ? (
+                    <button
+                      onClick={() => {
+                        setActiveItem(item.id);
+                        setOpen(false);
+                        if (item.id === "products" || item.id === "orders") {
+                          setOpenDropdown(isDropdownOpen ? null : item.id);
+                        }
+                      }}
+                      className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 group ${
+                        isActive
+                          ? "bg-blue-600 text-white shadow-lg"
+                          : "text-gray-300 hover:bg-gray-700 hover:text-white"
+                      }`}
+                    >
+                      <Icon size={20} className="shrink-0" />
+                      <span className="font-medium text-sm">{item.label}</span>
                       <ChevronDown size={16} className={`ml-auto transition-transform ${isDropdownOpen ? "rotate-180" : ""}`} />
-                    )}
-                  </button>
+                    </button>
+                  ) : (
+                    <Link
+                      href={hrefs[item.id]}
+                      onClick={() => {
+                        setActiveItem(item.id);
+                        setOpen(false);
+                      }}
+                      className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 ${
+                        isActive
+                          ? "bg-blue-600 text-white shadow-lg"
+                          : "text-gray-300 hover:bg-gray-700 hover:text-white"
+                      }`}
+                    >
+                      <Icon size={20} className="shrink-0" />
+                      <span className="font-medium text-sm">{item.label}</span>
+                    </Link>
+                  )}
 
                   {item.id === "products" && isDropdownOpen && (
                     <ul className="ml-8 mt-1 space-y-1 text-sm text-gray-400">
@@ -123,7 +148,7 @@ const SideBar = () => {
           </ul>
         </nav>
 
-        <div className="p-4 border-t border-gray-700 space-y-3 flex-shrink-0 mt-auto">
+        <div className="p-4 border-t border-gray-700 space-y-3 shrink-0 mt-auto">
           <div className="bg-gray-700/50 rounded-lg p-3">
             <p className="text-xs text-gray-300 mb-1">Logged in as</p>
             <p className="text-sm font-semibold truncate">Admin User</p>

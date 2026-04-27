@@ -1,9 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Bell, Search, Settings, User } from "lucide-react";
+import Link from "next/link";
+import Notifications from "./Notifications";
 
 const Navbar = () => {
+  const [showNotif, setShowNotif] = useState(false);
   return (
     <nav className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -14,7 +17,7 @@ const Navbar = () => {
             <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center shadow-lg">
               <span className="text-lg font-bold text-white">E</span>
             </div>
-            <h1 className="text-xl font-bold text-gray-900 hidden sm:block">E-Store Dashboard</h1>
+            <Link href={"/dashboard"}><h1 className="text-xl font-bold text-gray-900 hidden sm:block">E-Store Dashboard</h1></Link>
           </div>
 
           {/* Search Bar */}
@@ -30,12 +33,18 @@ const Navbar = () => {
           </div>
 
           {/* Right Section */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 relative">
             {/* Notifications */}
-            <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors relative group">
-              <Bell size={20} className="text-gray-600 group-hover:text-gray-900" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
-            </button>
+            <div className="relative">
+              <button
+                onClick={() => setShowNotif((s) => !s)}
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors relative group"
+              >
+                <Bell size={20} className="text-gray-600 group-hover:text-gray-900" />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+              </button>
+              <Notifications open={showNotif} onClose={() => setShowNotif(false)} />
+            </div>
 
             {/* Settings */}
             <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors hidden sm:block">
